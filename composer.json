@@ -4,7 +4,7 @@
     "description": "Class to convert numbers to Serbian words",
     "keywords": ["numbers", "words", "serbian"],
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.4"
     },
     "license": "GPL",
     "authors": [
