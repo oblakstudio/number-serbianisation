@@ -61,7 +61,7 @@ class NumbersToSerbianWords
 
 	}
 
-	public function to_letters()
+	public function to_words()
 	{
 
 		$this->separate_digits($this->number);

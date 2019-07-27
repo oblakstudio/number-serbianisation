@@ -1,0 +1,24 @@
+{
+    "name": "seebeen/numberstoserbianwords",
+    "version": "1.0.0",
+    "description": "Class to convert numbers to Serbian words",
+    "keywords": ["numbers", "words", "serbian"],
+    "require": {
+        "php": ">=5.4",
+    },
+    "require-dev": {
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Sibin Grasic",
+            "email": "sg@sgi.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SeeBeen\\SerbianPHP\\": "src/"
+        },
+        "classmap": ["src/"]
+    }
+}
