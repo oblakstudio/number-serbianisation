@@ -1,12 +1,10 @@
 {
     "name": "seebeen/numberstoserbianwords",
-    "version": "1.0.0",
+    "version": "1.0",
     "description": "Class to convert numbers to Serbian words",
     "keywords": ["numbers", "words", "serbian"],
     "require": {
         "php": ">=5.4",
-    },
-    "require-dev": {
     },
     "license": "GPL",
     "authors": [
