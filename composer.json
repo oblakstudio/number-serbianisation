@@ -1,22 +1,44 @@
 {
-    "name": "seebeen/numberstoserbianwords",
-    "version": "1.0",
-    "description": "Class to convert numbers to Serbian words",
-    "keywords": ["numbers", "words", "serbian"],
-    "require": {
-        "php": ">=5.4"
-    },
-    "license": "GPL",
-    "authors": [
-        {
-            "name": "Sibin Grasic",
-            "email": "sg@sgi.io"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "SeeBeen\\SerbianPHP\\": "src/"
-        },
-        "classmap": ["src/"]
+  "name": "seebeen/numberstoserbianwords",
+  "version": "1.0",
+  "description": "Class to convert numbers to Serbian words",
+  "keywords": [
+    "numbers",
+    "words",
+    "serbian"
+  ],
+  "require": {
+    "php": ">=8.1"
+  },
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Sibin Grasic",
+      "email": "sg@sgi.io"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Oblak\\SrbUtils\\": "src"
+    },
+    "classmap": [
+      "src/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Oblak\\SrbUtils\\Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.10",
+    "squizlabs/php_codesniffer": "^3.9",
+    "phpunit/phpunit": "^10.5",
+    "slevomat/coding-standard": "^8.15"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
 }

@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<ruleset name="LibraryConfig" xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+  <description>PHP_CodeSniffer configuration</description>
+
+  <arg value="sp"/>                    <!-- Show sniff and progress -->
+  <arg name="parallel" value="8"/>     <!-- Enables parallel processing when available for faster results. -->
+  <arg name="colors"/>                 <!-- Show colors -->
+  <arg name="extensions" value="php"/> <!-- File extensions to check -->
+  <rule ref="PSR1"/>
+  <rule ref="PSR2"/>
+  <rule ref="PSR12"/>
+
+    <!-- Slevomat Sniffs - Array -->
+  <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+  <rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
+  <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace">
+    <properties>
+      <property name="spacesAroundBrackets" value="1"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+
+  <!-- Slevomat Sniffs - Attributes -->
+  <rule ref="SlevomatCodingStandard.Attributes.AttributeAndTargetSpacing">
+    <properties>
+      <property name="linesCount" value="0"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Attributes.DisallowAttributesJoining"/>
+  <rule ref="SlevomatCodingStandard.Attributes.DisallowMultipleAttributesPerLine"/>
+  <rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment"/>
+
+  <!-- Slevomat Sniffs - Classes -->
+  <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing">
+    <properties>
+      <property name="linesCountBetweenMembers" value="1"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
+    <properties>
+      <property name="linesCountAfterOpeningBrace" value="0"/>
+      <property name="linesCountBeforeClosingBrace" value="0"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Classes.MethodSpacing">
+    <properties>
+      <property name="minLinesCount" value="1"/>
+      <property name="maxLinesCount" value="1"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+  <rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration"/>
+  <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
+  <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
+  <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
+  <rule ref="SlevomatCodingStandard.Classes.SuperfluousErrorNaming"/>
+  <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
+  <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
+
+  <!-- Slevomat Sniffs - Commenting -->
+  <rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
+  <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
+
+  <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+
+  <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
+
+  <!-- Slevomat Sniffs - Complexity -->
+  <rule ref="SlevomatCodingStandard.Complexity.Cognitive">
+    <properties>
+      <property name="warningThreshold" value="6"/>
+      <property name="errorThreshold" value="8"/>
+    </properties>
+  </rule>
+
+  <!-- Slevomat Sniffs - Control Structures -->
+  <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.DisallowTrailingMultiLineTernaryOperator"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineCondition">
+    <properties>
+      <property name="minLineLength" value="111"/>
+      <property name="booleanOperatorOnPreviousLine" value="true"/>
+      <property name="alwaysSplitAllConditionParts" value="false"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullSafeObjectOperator"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition">
+    <properties>
+      <property name="maxLineLength" value="110"/>
+      <property name="alwaysForSimpleConditions" value="true"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.UselessIfConditionWithReturn"/>
+  <rule ref="SlevomatCodingStandard.ControlStructures.UselessTernaryOperator"/>
+
+  <!-- Slevomat Sniffs - Exceptions -->
+  <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+  <rule ref="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch"/>
+
+  <!-- Slevomat Sniffs - Functions -->
+  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
+    <properties>
+      <property name="spacesCountAfterKeyword" value="0"/>
+      <property name="spacesCountBeforeArrow" value="1"/>
+      <property name="spacesCountAfterArrow" value="1"/>
+      <property name="allowMultiLine" value="true"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction"/>
+  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+  <rule ref="SlevomatCodingStandard.Functions.RequireMultiLineCall">
+    <properties>
+      <property name="minLineLength" value="111"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Functions.RequireSingleLineCall">
+    <properties>
+      <property name="maxLineLength" value="110"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
+  <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
+  <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+  <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
+  <rule ref="SlevomatCodingStandard.Functions.StrictCall"/>
+  <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
+
+  <!-- Slevomat Sniffs - Namespaces -->
+  <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
+    <properties>
+      <property name="linesCountBeforeFirstUse" value="1"/>
+      <property name="linesCountBetweenUseTypes" value="1"/>
+      <property name="linesCountAfterLastUse" value="1"/>
+    </properties>
+  </rule>
+  <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+  <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+
+  <!-- Slevomat Sniffs - Operators -->
+  <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>
+  <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
+  <rule ref="SlevomatCodingStandard.Operators.SpreadOperatorSpacing"/>
+
+  <!-- Slevomat Sniffs - PHP -->
+  <rule ref="SlevomatCodingStandard.PHP.DisallowDirectMagicInvokeCall"/>
+  <rule ref="SlevomatCodingStandard.PHP.RequireNowdoc"/>
+  <rule ref="SlevomatCodingStandard.PHP.OptimizedFunctionsWithoutUnpacking"/>
+  <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+  <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
+  <rule ref="SlevomatCodingStandard.PHP.UselessParentheses"/>
+  <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+
+
+  <file>src/</file>
+</ruleset>

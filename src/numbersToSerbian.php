@@ -1,210 +1,246 @@
 <?php
 
-namespace SeeBeen\SerbianPHP;
+namespace Oblak\SrbUtils;
 
 class NumbersToSerbianWords
 {
+    /**
+     * Digits to words mapping
+     *
+     * @var array<int, string>
+     */
+    private static $digits = [
+        0    => 'nula',
+        1    => 'jedan',
+        2    => 'dva',
+        3    => 'tri',
+        4    => 'četiri',
+        5    => 'pet',
+        6    => 'šest',
+        7    => 'sedam',
+        8    => 'osam',
+        9    => 'devet',
+        10   => 'deset',
+        11   => 'jedanaest',
+        12   => 'dvanaest',
+        13   => 'trinaest',
+        14   => 'četrnaest',
+        15   => 'petnaest',
+        16   => 'šesnaest',
+        17   => 'sedamnaest',
+        18   => 'osamnaest',
+        19   => 'devetnaest',
+        40   => 'četrdeset',
+        50   => 'pedeset',
+        60   => 'šezdeset',
+        90   => 'devedeset',
+        100  => 'sto',
+        200  => 'dvesta',
+        300  => 'trista',
+        1000 => 'hiljadu',
+    ];
 
-	private static $digits = [
-		0	 => 'nula',
-		1	 => 'jedan',
-		2	 => 'dva',
-		3	 => 'tri',
-		4	 => 'četiri',
-		5	 => 'pet',
-		6	 => 'šest',
-		7	 => 'sedam',
-		8	 => 'osam',
-		9	 => 'devet',
-		10	 => 'deset',
-		11   => 'jedanaest',
-		12   => 'dvanaest',
-		13   => 'trinaest',
-		14   => 'četrnaest',
-		15   => 'petnaest',
-		16   => 'šesnaest',
-		17   => 'sedamnaest',
-		18   => 'osamnaest',
-		19   => 'devetnaest',
-		40	 => 'četrdeset',
-		50	 => 'pedeset',
-		60	 => 'šezdeset',
-		90	 => 'devedeset',
-		100	 => 'sto',
-		200	 => 'dvesta',
-		300  => 'trista',
-		1000 => 'hiljadu',
-	];
+    public function __construct(
+        /**
+         * Which scale to use for large numbers.
+         *
+         * @var NumberScale $scale
+         */
+        private NumberScale $scale = NumberScale::Long,
+        private bool $useAccusative = false,
+    ) {
+    }
 
-	private $number;
+    /**
+     * Get the scale for large numbers
+     *
+     * @return NumbersToSerbianWords
+     */
+    public function useScale(NumberScale $scale): NumbersToSerbianWords
+    {
+        $this->scale = $scale;
 
-	private $separated;
+        return $this;
+    }
 
-	private $string;
+    public function useAccusative(bool $useAccusative = true): NumbersToSerbianWords
+    {
+        $this->useAccusative = $useAccusative;
 
+        return $this;
+    }
 
-	public function __construct($number)
-	{
+    /**
+     * Converts the number to an array of words in Serbian
+     *
+     * @param  int|string|float|\Stringable $number The number to convert.
+     * @return array<int, string>
+     */
+    public function toWordArray(int|string|float|\Stringable $number): array
+    {
+        if (\is_object($number)) {
+            $number = (string) $number;
+        }
 
-		$this->number    = $number;
-		$this->separated = [];
-		$this->string    = '';
+        $formatted = [];
+        $separated = $this->separateDigits((int)$number);
+        $groups    = \count($separated) - 1;
 
-	}
+        if ([ 0 ] === $separated) {
+            return [ self::$digits[0] ];
+        }
 
-	public function set_number($number)
-	{
+        foreach ($separated as $index => $grouped) :
+            $formatted[] = $this->convertSections($grouped, $groups - $index);
+        endforeach;
 
-		$this->number    = $number;
-		$this->separated = [];
-		$this->string    = '';
+        return \array_filter($formatted);
+    }
 
-	}
+    /**
+     * Converts the number to a string representation in Serbian
+     *
+     * @param  int|string|float|\Stringable $number The number to convert.
+     * @return string
+     */
+    public function toWordString(int|string|float|\Stringable $number): string
+    {
+        return \implode(' ', $this->toWordArray($number));
+    }
 
-	public function to_words()
-	{
+    /**
+     * Separates the number into groups of 3 digits
+     *
+     * @param  int $number The number to separate.
+     * @return array<int, int>
+     */
+    private function separateDigits(int $number): array
+    {
+        if (0 === (int) $number) {
+            return [ 0 ];
+        }
 
-		$this->separate_digits($this->number);
+        $current = $number % 1000;
+        $remainder = \intdiv($number, 1000);
 
-		foreach ($this->separated as $index => $number) :
-			$this->convert_sections($index,$number);
-		endforeach;
+        if (0 === $remainder) {
+            return [ $current ];
+        }
 
-		return str_replace('  ',' ',$this->string);
-		
+        $separated = $this->separateDigits($remainder);
+        $separated[] = $current;
 
-	}
-	private function separate_digits($number)
-	{
+        return $separated;
+    }
 
-		$this->separated[] = ($number % 1000);
-		
-		$number = intdiv($number,1000);
-
-		if ($number > 0)
-			return $this->separate_digits($number);
-		else
-			return true;
-
-	}
-
-	private function convert_sections($index,$number)
-	{
-
-		$divisors = [
-			100 => 'sto',
-			10  => 'deset',
-			1   => ''			
-		];
-
-		$last_digit = $number % 100;
-
-
-		$section_string = '';
-
-		foreach ($divisors as $divisor => $suffix) :
-
-			if ($number == 0)
-				break;
-
-			if (array_key_exists($number,self::$digits)) :
-
-				$section_string .= sprintf(
-					'%s',
-					self::$digits[$number]
-				);
-				break;
-
-			endif;
-
-			$remainder = $number % $divisor;
-			$number    = $number - $remainder;
-
-			if ($number > 0) :
-
-				if (array_key_exists($number,self::$digits)) :
-
-					$section_string .= sprintf(
-						'%s ',
-						self::$digits[$number]
-					);
-
-				else :
-
-					$digit = intdiv($number,$divisor);
-
-					$section_string .= sprintf(
-						'%s%s ',
-						self::$digits[$digit],
-						$suffix
-					);
-
-				endif;
-
-			endif;
-
-			$number = $remainder;			
-
-		endforeach;
-
-		$section_string = $this->append_suffix($section_string, $index, $last_digit);
-
-		if (in_array($index,[1,3])) :
+    private function convertSections(int $number, int $group): string
+    {
+        if ($this->withAccusative($number, $group)) {
+            return $this->formatGroup($number, $group);
+        }
 
 
-			$section_string = str_replace('jedan ', 'jedna ', $section_string);
-			$section_string = str_replace('dva ', 'dve ', $section_string);
+        $numberString = $this->convertDigits($number);
+        $numberString = $this->maybeGenderize($numberString, $group);
 
-		endif;
+        $numberString .= ' ' . $this->formatGroup($number, $group);
 
-		$this->string = sprintf(
-			'%s %s',
-			$section_string,
-			$this->string
-		);
+        return \trim($numberString);
+    }
 
-	}
+    private function withAccusative(int $number, int $group): bool
+    {
+        if (0 === $number) {
+            return true;
+        }
 
-	private function append_suffix($section_string, $section, $last_digit)
-	{
-
-		if($section == 3)
-		var_dump($last_digit);
-
-		if ($section == 0)
-			return $section_string;
-
-		$base = [
-			1 => 'hiljad',
-			2 => 'milion',
-			3 => 'milijard',
-			4 => 'bilion',
-		];
-
-		if (($last_digit % 10) == 1)
-			$last_digit = 1;
-		elseif  ( ($last_digit > 10) && (($last_digit % 10) <= 4) && (($last_digit % 10) > 1))
-			$last_digit = $last_digit % 10;
+        if (!$this->useAccusative) {
+            return false;
+        }
 
 
-		$letter_matrix = [
-			1 => ['a','a','e','e','e','a'],
-			2 => ['a','','a','a','a','a'],
-			3 => ['i','a','e','e','e','i'],
-			4 => ['a','','a','a','a','a'],
-		];
+        return 1 === $number && $this->scale->hasAccusative($group);
+    }
 
-		$last_digit = ($last_digit > 5) ? 5 : $last_digit;
+    private function convertDigits(int $number): string
+    {
+        $numString = '';
+        $divisors = [
+            100 => 'sto',
+            10  => 'deset',
+            1   => '',
+        ];
 
-		$suffix = $letter_matrix[$section][$last_digit];	
+        foreach ($divisors as $divisor => $suffix) {
+            if (0 === $number) {
+                break;
+            }
 
-		return sprintf(
-			'%s %s%s',
-			$section_string,
-			$base[$section],
-			$suffix
-		);
+            $numString .= $this->convertDigit($number, $divisor, $suffix);
+        }
 
-	}
+        return $numString;
+    }
 
+    private function convertDigit(int &$number, int $divisor, string $suffix): string
+    {
+        if (isset(self::$digits[$number])) {
+            $result = self::$digits[$number];
+            $number = 0; // Reset number after processing to avoid further handling.
+            return $result;
+        }
+
+        $remainder = $number % $divisor;
+        $processedNumber = $number - $remainder;
+        $number = $remainder; // Update the number to be the remainder for further processing.
+
+        if ($processedNumber > 0 && isset(self::$digits[$processedNumber])) {
+            return self::$digits[$processedNumber] . ' ';
+        }
+
+        $digit = \intdiv($processedNumber, $divisor);
+        return (self::$digits[$digit] ?? '') . $suffix . ' ';
+    }
+
+    private function maybeGenderize(string $numberString, int $group): string
+    {
+        $replacement = [
+            'jedan' => 'jedna',
+            'dva'   => 'dve',
+        ];
+
+        if (1 === $group) {
+            return \strtr($numberString, $replacement);
+        }
+
+        if (NumberScale::Long !== $this->scale) {
+            return $numberString;
+        }
+
+        return 1 === $group % 2 ? \strtr($numberString, $replacement) : $numberString;
+    }
+
+    private function formatGroup(int $num, int $group): string
+    {
+        if (0 === $num || 0 === $group) {
+            return '';
+        }
+
+        $groupString = $this->scale->getScale($group);
+        $suffixes    = $this->scale->getSuffixes($group);
+
+        if ($this->withAccusative($num, $group)) {
+            $suffixes[0] = 'u';
+        }
+
+
+        $suffix = match (true) {
+            11 === $num % 100 => $suffixes[2],
+            1 === $num % 10   => $suffixes[0],
+            $num % 10 < 5     => $suffixes[1],
+            default           => $suffixes[2],
+        };
+
+        return "{$groupString}{$suffix}";
+    }
 }
