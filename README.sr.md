@@ -5,18 +5,20 @@
 [![codecov](https://codecov.io/gh/oblakstudio/number-serbianisation/graph/badge.svg?token=RoeLb6hV76)](https://codecov.io/gh/oblakstudio/number-serbianisation)
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
+Omogućava konverziju brojeva u tekst na srpskom jeziku - odnosno "posrbljavanje" brojeve.
 
+## Instalacija
 
-
-## Installation
-
-You can install the package via composer:
+Biblioteku možete instalirati koristeći composer:
 
 ```bash
 composer require oblak/number-serbianisation
 ```
 
-## Usage
+## Upotreba
+
+Biblioteka podržava dva načina skaliranja brojeva "kratki" i "dugi" (eng. short, long) kao i upotrebu "[skamenjenog akuzativa](https://www.nin.rs/arhiva/vesti/29972/skamenjeni-brojevi)" prilikom konverzije.
+
 
 ```php
 <?php
@@ -35,3 +37,4 @@ echo $srn->useScale(NumberScale::Short)->toWordString(1000000000); // jedan bili
 echo $srn->useScale(NumberScale::Long)->toWordString(1000000000); // jedna milijarda
 echo $srn->useAccusative()->toWordString(1000000000); // milijardu
 ```
+
