@@ -1,0 +1,27 @@
+{
+  "branches": [
+    "master"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "zip -jqr /tmp/release.zip src composer.json README.md"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "/tmp/release.zip",
+            "name": "numbers-to-serbian-words-${nextRelease.version}.zip",
+            "label": "Numbers to Serbian Words v${nextRelease.version}"
+          }
+        ]
+      }
+    ]
+  ]
+}

@@ -1,7 +1,19 @@
-name: Upload coverage
-on: [push, pull_request]
+name: Unit tests
+on:
+  push:
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "phpunit.xml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "phpunit.xml"
+
 jobs:
-  run:
+  upload_coverage:
+    name: Upload coverage to Codecov
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,6 +33,6 @@ jobs:
         env:
           XDEBUG_MODE: coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
