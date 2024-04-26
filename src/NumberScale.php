@@ -3,12 +3,12 @@
 /**
  * NumberScale enum file.
  *
- * @package Oblak\SrbUtils
+ * @package Oblak\Intl
  */
 
 declare(strict_types=1);
 
-namespace Oblak\SrbUtils;
+namespace Oblak\Intl;
 
 /**
  * Defines the number scale for large numbers
@@ -103,7 +103,7 @@ enum NumberScale: string
     {
         return match ($this) {
             self::Short => 1 === $group,
-            self::Long => 1 === $group % 2,
+            self::Long  => 1 === $group % 2,
         };
     }
 }

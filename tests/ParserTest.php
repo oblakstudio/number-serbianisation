@@ -2,20 +2,21 @@
 
 declare(strict_types=1);
 
-use Oblak\SrbUtils\NumberScale;
-use Oblak\SrbUtils\NumbersToSerbianWords;
-use Oblak\SrbUtils\Tests\TestBase;
+namespace Oblak\Intl\Tests;
+
+use Oblak\Intl\NumberScale;
+use Oblak\Intl\NumberSerbianizer;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(NumbersToSerbianWords::class)]
+#[CoversClass(NumberSerbianizer::class)]
 #[CoversClass(NumberScale::class)]
 class ParserTest extends TestBase
 {
-    private NumbersToSerbianWords $parser;
+    private NumberSerbianizer $parser;
 
     public function setUp(): void
     {
-        $this->parser = new NumbersToSerbianWords();
+        $this->parser = new NumberSerbianizer();
     }
 
     public function testSeparateDigits()

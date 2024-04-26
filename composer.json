@@ -1,6 +1,6 @@
 {
-  "name": "oblak/numbers-to-serbian-words",
-  "description": "Converts numbers to Serbian words",
+  "name": "oblak/number-serbianisation",
+  "description": "Convert numbers to words in Serbian language",
   "license": "MIT",
   "keywords": [
     "numbers",
@@ -14,8 +14,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/oblakstudio/numbers-to-serbian-words/issues",
-    "source": "https://github.com/oblakstudio/numbers-to-serbian-words"
+    "issues": "https://github.com/oblakstudio/number-serbianisation/issues",
+    "source": "https://github.com/oblakstudio/number-serbianisation"
   },
   "require": {
     "php": "^8.1"
@@ -28,12 +28,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Oblak\\SrbUtils\\": "src"
+      "Oblak\\Intl\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Oblak\\SrbUtils\\Tests\\": "tests"
+      "Oblak\\Intl\\Tests\\": "tests"
     }
   },
   "config": {

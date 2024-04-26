@@ -1,8 +1,8 @@
 <?php
 
-namespace Oblak\SrbUtils;
+namespace Oblak\Intl;
 
-class NumbersToSerbianWords
+class NumberSerbianizer
 {
     /**
      * Digits to words mapping
@@ -56,14 +56,14 @@ class NumbersToSerbianWords
      *
      * @return NumbersToSerbianWords
      */
-    public function useScale(NumberScale $scale): NumbersToSerbianWords
+    public function useScale(NumberScale $scale): NumberSerbianizer
     {
         $this->scale = $scale;
 
         return $this;
     }
 
-    public function useAccusative(bool $useAccusative = true): NumbersToSerbianWords
+    public function useAccusative(bool $useAccusative = true): NumberSerbianizer
     {
         $this->useAccusative = $useAccusative;
 

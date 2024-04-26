@@ -17,8 +17,8 @@
         "assets": [
           {
             "path": "/tmp/release.zip",
-            "name": "numbers-to-serbian-words-${nextRelease.version}.zip",
-            "label": "Numbers to Serbian Words v${nextRelease.version}"
+            "name": "number-serbianisation-${nextRelease.version}.zip",
+            "label": "Numbers Serbianisation v${nextRelease.version}"
           }
         ]
       }
